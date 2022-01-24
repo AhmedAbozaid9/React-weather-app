@@ -7,13 +7,13 @@ class WeatherDisplay extends React.Component {
   async getWeather() {
     const key = "5011a2f8dc2263d89aa88739a65bd335";
     const result = await axios.get(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${this.props.lat}&lon=${this.props.lon}&appid=${key}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${this.props.lat}&lon=${this.props.lon}&appid=${key}`
     );
     const data = await result.data;
+    console.log(data)
     this.setState({
       place: data.name,
-      tempF: data.main.temp,
-      tempC: (data.main.temp - 32) * 5/9,
+      temp: Math.round(data.main.temp - 273.15), //converting from kelvin to celcius
       icon: data.weather[0].icon,
     });
   }

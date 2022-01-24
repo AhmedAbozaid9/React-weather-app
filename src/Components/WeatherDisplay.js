@@ -3,7 +3,7 @@ import axios from "axios";
 import WeatherCard from "./WeatherCard";
 
 class WeatherDisplay extends React.Component {
-  state = { loc: "", temp: null };
+  state = { loc: "", temp: null,icon:"",ready:false };
 
   async getWeather() {
     const key = "5011a2f8dc2263d89aa88739a65bd335";
@@ -11,11 +11,12 @@ class WeatherDisplay extends React.Component {
       `https://api.openweathermap.org/data/2.5/weather?lat=${this.props.lat}&lon=${this.props.lon}&appid=${key}`
     );
     const data = await result.data;
-    console.log(data);
     this.setState({
       loc: data.name,
       temp: Math.round(data.main.temp - 273.15), //converting from kelvin to celcius
       icon: data.weather[0].icon,
+      description: data.weather[0].description,
+      ready:true,
     });
   }
 
@@ -29,6 +30,8 @@ class WeatherDisplay extends React.Component {
         loc={this.state.loc}
         temp={this.state.temp}
         icon={this.state.icon}
+        description={this.state.description}
+        ready={this.state.ready}
       />
     );
   }

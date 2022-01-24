@@ -1,0 +1,2 @@
+# First React Project
+this is my first ever app using the framework, So it wasn't easy for sure, but I learned alot from it. it uses the openweathermap API to fetch the weather based on the lattitude and the longitude of a person. feel free to [try it out](https://blissful-bell-cdbae3.netlify.app/)

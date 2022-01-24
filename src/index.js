@@ -1,10 +1,30 @@
-import React from 'react'
-import ReactDom from 'react-dom'
+import React from "react";
+import ReactDom from "react-dom";
+import "./CSS/index.css";
+import Spinner from "./Components/Spinner";
+import WeatherDisplay from "./Components/WeatherDisplay";
 
 class App extends React.Component {
-    render(){
-        return <div>hello world</div>
-    }
-}
+  state = { lat: null, errorMessage: "" };
 
-ReactDom.render(<App/>, document.getElementById('root'))
+  componentDidMount() {
+    //get the user location
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => this.setState({ lat: position.coords.latitude }),
+      (err) => this.setState({ errorMessage: err.message })
+    );
+  }
+  renderContent() {
+    if (this.state.lat) {
+      return <WeatherDisplay lat = {this.state.lat}/>;
+    } else if (this.state.errorMessage) {
+      return <div>{this.state.errorMessage}</div>;
+    } else {
+      return <Spinner />;
+    }
+  }
+  render() {
+    return this.renderContent();
+  }
+}
+ReactDom.render(<App />, document.getElementById("root"));
